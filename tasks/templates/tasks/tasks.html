@@ -1,0 +1,42 @@
+{% extends 'layouts/main.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col">
+        <h1>Tareas</h1> 
+        <a href="{% url 'create_task' %}" class="btn btn-primary">+ Añadir tarea</a>
+    </div>
+</div>
+
+<div class="mt-4">
+{% for task in tasks %}
+    <a href="{% url 'detail_task' task.id %}" class="card p-3 mb-3" style="text-decoration: none;">
+        <h5>{{ task.title }} {% if task.is_important %}<span class="badge bg-warning fs-7">*Importante</span>{% endif %}</h5>
+        <p>{{ task.description }}</p>
+        <p>{{ task.created }}</p>
+        <div class="row">
+            <div class="col">
+                {% if task.datecompleted %}
+                    <form action="{% url 'complete_task' task.id %}" method="POST">
+                        {% csrf_token %}
+                        <button class="btn btn-outline-success">Completada el {{ task.datecompleted }}</button>
+                    </form>
+                {% else %}
+                    <form action="{% url 'complete_task' task.id %}" method="POST">
+                        {% csrf_token %}
+                        <button class="btn btn-outline-warning">Pendiente</button>
+                    </form>
+                {% endif %}
+            </div>
+            <div class="col text-end">
+                <form method="POST" action="{% url 'delete_task' task.id %}">
+                    {% csrf_token %}
+                    <button class="btn btn-danger">Borrar</button>
+                </form>
+            </div>
+        </div>
+    </a>
+{% endfor %}
+</div>
+
+{% endblock %}

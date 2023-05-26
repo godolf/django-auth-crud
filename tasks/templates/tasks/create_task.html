@@ -1,0 +1,15 @@
+{% extends 'layouts/main.html' %}
+
+{% block content %}
+<h1>Añadir tarea</h1>
+<a class="btn btn-outline-secondary mb-3" href="{% url 'tasks' %}">< Volver</a>
+
+{{ error }}
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary">+ Añadir tarea</button>
+</form>
+
+{% endblock %}

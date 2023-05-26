@@ -1,0 +1,24 @@
+{% extends 'layouts/main.html' %}
+
+{% block content %}
+<h1>Detalles tarea</h1>
+<a class="btn btn-outline-secondary mb-3" href="{% url 'tasks' %}">< Volver</a>
+
+{{ error }}
+
+<div class="card p-3">
+    <h4>Título: {{ task.title }} {% if task.is_important %}<span class="badge bg-warning fs-7">*Importante</span>{% endif %}</h4>
+    <p>Descripción: {{ task.description }}</p>
+    <p>Creada: {{ task.created }}</p>
+    <p>Completada: {{ task.datecompleted }}</p>
+</div>
+
+<hr>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary">Editar tarea</button>
+</form>
+
+{% endblock %}
